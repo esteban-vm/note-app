@@ -9,7 +9,6 @@ module.exports = {
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'plugin:react-hooks/recommended',
     'plugin:prettier/recommended',
-    'plugin:vitest/recommended',
     'plugin:jsx-a11y/recommended',
     'plugin:import/recommended',
     'plugin:import/typescript',
@@ -25,8 +24,16 @@ module.exports = {
   rules: {
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
     '@typescript-eslint/no-non-null-assertion': 'off',
-    '@typescript-eslint/consistent-type-imports': 'warn',
+    '@typescript-eslint/no-misused-promises': 'off',
+    '@typescript-eslint/no-unsafe-call': 'off',
+    '@typescript-eslint/no-unsafe-assignment': 'off',
+    '@typescript-eslint/no-unsafe-member-access': 'off',
+    '@typescript-eslint/restrict-template-expressions': 'off',
+    '@typescript-eslint/consistent-type-imports': ['warn', { disallowTypeAnnotations: false }],
+    'jsx-a11y/no-autofocus': 'off',
     'prettier/prettier': 'warn',
+    'import/no-named-as-default': 'off',
+    'import/no-named-as-default-member': 'off',
     'import/order': [
       'warn',
       { groups: ['type', 'builtin', 'external', 'internal', ['sibling', 'parent'], 'index', 'unknown'] },
@@ -34,5 +41,4 @@ module.exports = {
   },
   ignorePatterns: ['*.cjs', 'node_modules', 'dist', 'public'],
   settings: { 'import/resolver': { typescript: true } },
-  globals: { vi: true },
 }

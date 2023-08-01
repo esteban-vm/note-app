@@ -1,0 +1,354 @@
+@import 'normalize.css';
+@import 'notie/dist/notie.min.css';
+
+@font-face {
+  font-family: 'Lexend';
+  font-display: swap;
+  src: url('/fonts/Lexend.ttf') format('truetype-variations');
+}
+
+/* Capability variables */
+@custom-media --touch (hover: none) and (any-pointer: coarse);
+@custom-media --stylus (hover: none) and (any-pointer: fine);
+@custom-media --pointer (hover) and (any-pointer: coarse);
+@custom-media --mouse (hover) and (any-pointer: fine);
+
+/* Viewport variables */
+@custom-media --portrait (orientation: portrait);
+@custom-media --landscape (orientation: landscape);
+
+:root {
+  --color-main: #f68657;
+  --color-text: #383a3f;
+  --color-dark: #1f2124;
+  --color-gray: #677;
+  --color-bg: #f3f6f9;
+  --color-light: #acb4bd;
+  --color-lighter: #f9f9f9;
+  --color-white: #fff;
+  --color-border: #e0e3e6;
+}
+
+* {
+  font-family: 'Lexend', sans-serif;
+  color: inherit;
+  font-size: inherit;
+  scroll-behavior: smooth;
+  text-size-adjust: 100%;
+
+  &::selection {
+    color: var(--color-text);
+    background-color: var(--color-main);
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+body {
+  line-height: 1.8em;
+  font-weight: 400;
+  font-size: 16px;
+
+  @media (--touch) or (--stylus) {
+    font-size: 14px;
+  }
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+.layout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100vw;
+  height: 100vh;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+
+  &.dark {
+    --color-main: #f68657;
+    --color-text: #d6d1d1;
+    --color-dark: #f5f6f7;
+    --color-gray: #999;
+    --color-bg: #1f2124;
+    --color-lighter: #292a2c;
+    --color-white: #2e3235;
+    --color-border: #252629;
+  }
+
+  main {
+    position: relative;
+    border-radius: 1.8rem;
+    width: 100%;
+    max-width: 480px;
+    height: 90vh;
+    background-color: var(--color-white);
+    box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+
+    > header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      border-radius: 1.8rem 1.8rem 0 0;
+      padding: 1rem;
+      background-color: var(--color-lighter);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+      h1 {
+        font-size: 1.7rem;
+        color: var(--color-dark);
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+.loader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.notes {
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 2.5rem;
+    font-weight: 600;
+
+    h2 {
+      font-size: 1.3rem;
+      color: var(--color-main);
+    }
+
+    p {
+      font-size: 1.1rem;
+      color: var(--color-gray);
+    }
+  }
+}
+
+.note_list {
+  max-height: 70vh;
+  overflow: scroll;
+}
+
+.note_item {
+  display: block;
+  border-bottom: 1px solid var(--color-border);
+  border-radius: 1.5rem;
+  margin: 0.7rem 0;
+  padding: 0.1rem 1rem;
+  transition: all 0.2s ease-in-out;
+  user-select: none;
+  line-height: 1.2rem;
+
+  h3 {
+    font-weight: 600;
+    margin-bottom: 0;
+  }
+
+  p {
+    font-size: 0.8rem;
+    color: var(--color-light);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    span {
+      font-weight: 600;
+      color: var(--color-gray);
+      display: inline-block;
+      margin-right: 0.5rem;
+    }
+  }
+
+  &:first-of-type {
+    margin-top: 0;
+  }
+
+  @media (--touch) and (--landscape) {
+    padding: 0 1rem;
+    line-height: 1rem;
+  }
+
+  @media (--mouse) or (--pointer) {
+    &:hover {
+      background-color: var(--color-bg);
+      transform: scale(0.95);
+    }
+  }
+}
+
+.note_detail {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  header {
+    width: 100%;
+    color: var(--color-main);
+
+    button {
+      border: none;
+      outline: none;
+      background-color: transparent;
+      font-size: 1.8rem;
+
+      &:active {
+        transform: scale(0.9);
+      }
+
+      &:first-of-type {
+        margin-left: 1rem;
+      }
+
+      &:last-of-type {
+        margin-right: 1rem;
+      }
+
+      @media (--touch) {
+        font-size: 1.5rem;
+      }
+
+      @media (--mouse) or (--pointer) {
+        &:hover {
+          opacity: 0.6;
+        }
+      }
+    }
+  }
+
+  input {
+    background-color: inherit;
+    font-size: 1.2rem;
+  }
+
+  textarea {
+    text-align: justify;
+    background-color: inherit;
+    height: 60vh;
+    resize: none;
+  }
+
+  input,
+  textarea {
+    width: 95%;
+    padding: 0.5rem;
+    border: none;
+
+    &:focus {
+      outline: none;
+    }
+
+    &::placeholder {
+      font-style: italic;
+    }
+  }
+}
+
+.floating_button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  right: 1.5rem;
+  background-color: var(--color-main);
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+  border: none;
+  border-radius: 50%;
+  transition: transform 200ms;
+  z-index: 100;
+  font-size: 2.3rem;
+  width: 3.8rem;
+  height: 3.8rem;
+
+  svg {
+    fill: var(--color-bg);
+  }
+
+  &:active {
+    transform: scale(0.9);
+  }
+
+  &[data-key='theme' i] {
+    bottom: 11.5rem;
+  }
+
+  &[data-key='language' i] {
+    bottom: 6.5rem;
+  }
+
+  &[data-key='new_note' i] {
+    bottom: 1.5rem;
+  }
+
+  @media (--touch) {
+    @media (--portrait) {
+      font-size: 2rem;
+      width: 3.5rem;
+      height: 3.5rem;
+    }
+
+    @media (--landscape) {
+      font-size: 2rem;
+      width: 3rem;
+      height: 3rem;
+
+      &[data-key='theme' i] {
+        right: 8.5rem;
+      }
+
+      &[data-key='language' i] {
+        right: 5rem;
+      }
+
+      &[data-key] {
+        bottom: 1.5rem;
+      }
+    }
+  }
+
+  @media (--mouse) or (--pointer) {
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
+.notie-container {
+  max-width: 480px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1rem;
+  background-color: var(--color-main);
+  box-shadow: none;
+
+  .notie-background-success {
+    background-color: inherit;
+  }
+
+  .notie-background-error {
+    background-color: var(--color-text);
+  }
+
+  .notie-background-info {
+    background-color: var(--color-gray);
+  }
+}

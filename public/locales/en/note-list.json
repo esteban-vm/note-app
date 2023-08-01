@@ -1,0 +1,7 @@
+{
+  "buttons": {
+    "theme": "Toggle theme",
+    "language": "Toggle language",
+    "add": "New note"
+  }
+}

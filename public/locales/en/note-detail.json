@@ -1,0 +1,37 @@
+{
+  "buttons": {
+    "back": "Back",
+    "create": "Create",
+    "update": "Update",
+    "remove": "Remove"
+  },
+
+  "inputs": {
+    "title": "The title…",
+    "create": "Write the note…",
+    "update": "Edit the note…"
+  },
+
+  "alerts": {
+    "create": "Created successfully",
+    "update": "Updated successfully",
+    "remove": "Removed successfully"
+  },
+
+  "confirms": {
+    "create": "Create note?",
+    "update": "Update note?",
+    "remove": "Remove note?"
+  },
+
+  "options": {
+    "submit": "Yes",
+    "cancel": "No"
+  },
+
+  "validations": {
+    "clean": "Please, don't use bad words",
+    "title": "Title must be at least 3 characters long",
+    "content": "Content must be at least 10 characters long"
+  }
+}
