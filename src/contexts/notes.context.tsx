@@ -4,7 +4,7 @@ import useLocalStorage from 'use-local-storage'
 import uniqid from 'uniqid'
 
 interface INoteContext {
-  /** Saved notes */
+  /** Notes saved in local storage */
   notes: Note[]
   /** Retrieves -or not- a saved note based on an id */
   get: (id: string) => Note | undefined

@@ -22,20 +22,21 @@ const NoteDetail: FC<{ isNew?: boolean }> = ({ isNew }) => {
   const { get, create, update, remove } = useNotes()
 
   const filter = new Filter()
-  const refineParams = [(value: string) => !filter.isProfane(value), { message: t('validations.clean') }] as const
+  const isClean = (value: string) => !filter.isProfane(value)
+  const params = [isClean, { message: t('validations.clean') }] as const
   const validationSchema = z.object({
     title: z
       .string()
       .trim()
       .min(3, t('validations.title'))
       .max(40)
-      .refine(...refineParams),
+      .refine(...params),
     content: z
       .string()
       .trim()
       .min(10, t('validations.content'))
       .max(500)
-      .refine(...refineParams),
+      .refine(...params),
   })
 
   const {
@@ -83,7 +84,7 @@ const NoteDetail: FC<{ isNew?: boolean }> = ({ isNew }) => {
     })
   }
 
-  const onUpdate: SubmitHandler<FormValues> = ({ title, content }) => {
+  const onUpdate: typeof onCreate = ({ title, content }) => {
     const prevTitle = note!.title
     const prevContent = note!.content
     if (prevTitle !== title || prevContent !== content) {

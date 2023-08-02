@@ -2,12 +2,14 @@ import type { FC, ReactNode, Theme } from '@/types'
 import { createContext } from 'react'
 import useLocalStorage from 'use-local-storage'
 
-interface ThemeContextValue {
+interface IThemeContext {
+  /** Theme saved in local storage */
   theme: Theme
+  /** Changes the theme between light and dark */
   toggle: () => void
 }
 
-export const ThemeContext = createContext<ThemeContextValue | null>(null)
+export const ThemeContext = createContext<IThemeContext | null>(null)
 
 export const ThemeProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const isDark = matchMedia('(prefers-color-scheme: dark)').matches
