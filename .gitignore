@@ -24,3 +24,6 @@ coverage
 *.sln
 *.sw?
 *.txt
+/test-results/
+/playwright-report/
+/playwright/.cache/
