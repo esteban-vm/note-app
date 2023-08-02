@@ -7,8 +7,8 @@ import { useForm, type SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { alert, confirm, setOptions, type ConfirmOptions } from 'notie'
 import { z } from 'zod'
-import Filter from 'bad-words-es'
 import { useNotes } from '@/hooks'
+import { isClean } from '@/utils'
 
 setOptions({ positions: { confirm: 'bottom' }, overlayOpacity: 0, alertTime: 4 })
 
@@ -21,8 +21,6 @@ const NoteDetail: FC<{ isNew?: boolean }> = ({ isNew }) => {
   const [note, setNote] = useState<Note>()
   const { get, create, update, remove } = useNotes()
 
-  const filter = new Filter()
-  const isClean = (value: string) => !filter.isProfane(value)
   const params = [isClean, { message: t('validations.clean') }] as const
   const validationSchema = z.object({
     title: z
@@ -63,8 +61,11 @@ const NoteDetail: FC<{ isNew?: boolean }> = ({ isNew }) => {
 
   if (!isNew && !note) return null
 
-  const makeShake = () => navigator.vibrate?.(20)
-  const goBack = () => navigate(-1)
+  const goBack = () => {
+    navigate(-1)
+    navigator.vibrate?.(20)
+  }
+
   const commonOptions: Omit<ConfirmOptions, 'text'> = {
     submitText: t('options.submit'),
     cancelText: t('options.cancel'),
@@ -78,7 +79,6 @@ const NoteDetail: FC<{ isNew?: boolean }> = ({ isNew }) => {
       submitCallback() {
         create(title, content)
         alert({ text: t('alerts.create') })
-        makeShake()
         goBack()
       },
     })
@@ -94,7 +94,6 @@ const NoteDetail: FC<{ isNew?: boolean }> = ({ isNew }) => {
         submitCallback() {
           update(id, title, content)
           alert({ text: t('alerts.update') })
-          makeShake()
           goBack()
         },
       })
@@ -110,7 +109,6 @@ const NoteDetail: FC<{ isNew?: boolean }> = ({ isNew }) => {
       submitCallback() {
         remove(id)
         alert({ text: t('alerts.remove') })
-        makeShake()
         goBack()
       },
     })
