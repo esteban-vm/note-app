@@ -1,27 +1,83 @@
 import { test, expect } from '@playwright/test'
 
-test.beforeEach(({ page }) => {
-  page.setDefaultTimeout(5_000)
-})
-
-test.skip('has title', async ({ page }) => {
-  await page.goto('https://playwright.dev/')
-
-  // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/Playwright/)
-})
-
-test.skip('get started link', async ({ page }) => {
-  await page.goto('https://playwright.dev/')
-
-  // Click the get started link.
-  await page.getByRole('link', { name: 'Get started' }).click()
-
-  // Expects the URL to contain intro.
-  await expect(page).toHaveURL(/.*intro/)
-})
-
-test('Note app has title', async ({ page }) => {
+test.beforeEach(async ({ page }) => {
   await page.goto('/')
-  await expect(page).toHaveTitle(/note app/i)
+})
+
+test.describe('Creating a note:', () => {
+  test('should succeed with correct values', async ({ page }) => {
+    await expect(page.getByText(/^0$/)).toBeVisible()
+
+    await page.getByRole('link', { name: /new note/i }).click()
+    await expect(page).toHaveURL(/.*new/)
+
+    const titleInput = page.getByPlaceholder(/the title/i)
+    await expect(titleInput).toBeEmpty()
+    await expect(titleInput).toBeFocused()
+    await titleInput.fill('Testing note')
+    await titleInput.press('Tab')
+
+    const contentInput = page.getByPlaceholder(/write the note/i)
+    await expect(contentInput).toBeEmpty()
+    await expect(contentInput).toBeFocused()
+    await contentInput.fill('This should be created')
+
+    await page.getByRole('button', { name: /create/i }).click()
+    await page.getByText(/yes/i).click()
+
+    await expect(page.getByText(/created successfully/i)).toBeVisible()
+    await expect(page.getByText(/^1$/)).toBeVisible()
+    await expect(page.getByRole('link', { name: /testing note/i })).toBeVisible()
+  })
+
+  test('min length of values should be validated', async ({ page }) => {
+    await page.getByRole('link', { name: /new note/i }).click()
+
+    const createBtn = page.getByRole('button', { name: /create/i })
+    await createBtn.click()
+
+    await expect(page.getByText(/title must be at least 3 characters long/i)).toBeVisible()
+
+    const titleInput = page.getByPlaceholder(/the title/i)
+    await expect(titleInput).toBeFocused()
+    await titleInput.fill('Testing min length')
+
+    await expect(page.getByText(/content must be at least 10 characters long/i)).toBeVisible()
+    await page.getByPlaceholder(/write the note/i).fill('Hopefully should pass now')
+
+    await createBtn.click()
+    await page.getByText(/yes/i).click()
+
+    await expect(page.getByText(/created successfully/i)).toBeVisible()
+    await expect(page.getByRole('link', { name: /testing min length/i })).toBeVisible()
+  })
+
+  test('politeness of values should be validated', async ({ page }) => {
+    await page.getByRole('link', { name: /new note/i }).click()
+
+    const titleInput = page.getByPlaceholder(/the title/i)
+    await titleInput.fill('This sh1t should not pass')
+
+    const contentInput = page.getByPlaceholder(/write the note/i)
+    await contentInput.fill('What the hell is this')
+
+    const createBtn = page.getByRole('button', { name: /create/i })
+
+    await createBtn.click()
+    await expect(page.getByText("Please, don't use bad words").first()).toBeVisible()
+
+    await titleInput.clear()
+    await titleInput.fill('Testing politeness')
+
+    await expect(page.getByText("Please, don't use bad words")).toBeVisible()
+
+    await contentInput.clear()
+    await contentInput.fill('Nice to meet you')
+
+    await createBtn.click()
+    await page.getByText(/yes/i).click()
+
+    await expect(page.getByText(/created successfully/i)).toBeVisible()
+    await expect(page.getByRole('link', { name: /testing politeness/i })).toBeVisible()
+  })
 })
