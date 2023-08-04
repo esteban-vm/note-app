@@ -17,7 +17,7 @@ export default defineConfig({
         short_name: 'Simple Note App',
         description: 'App made with React JS, Vite and TypeScript',
         display: 'fullscreen',
-        orientation: 'any',
+        orientation: 'portrait',
         start_url: '/',
         theme_color: '#f68657',
         icons: [
@@ -53,6 +53,6 @@ export default defineConfig({
   ],
   server: { ...commonOptions, port: 5_174 },
   preview: { ...commonOptions, port: 5_175 },
-  css: { postcss: { plugins: [presetEnv()] } },
+  css: { postcss: { plugins: [presetEnv({ stage: 0, debug: true })] } },
   build: { target: 'ESNext' },
 })

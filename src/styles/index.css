@@ -8,10 +8,10 @@
 }
 
 /* Capability variables */
-@custom-media --touch (hover: none) and (any-pointer: coarse);
-@custom-media --stylus (hover: none) and (any-pointer: fine);
-@custom-media --pointer (hover) and (any-pointer: coarse);
-@custom-media --mouse (hover) and (any-pointer: fine);
+@custom-media --touch (hover: none) and (pointer: coarse);
+@custom-media --stylus (hover: none) and (pointer: fine);
+@custom-media --pointer (hover) and (pointer: coarse);
+@custom-media --mouse (hover) and (pointer: fine);
 
 /* Viewport variables */
 @custom-media --portrait (orientation: portrait);
@@ -186,7 +186,7 @@ button {
     line-height: 1rem;
   }
 
-  @media (--mouse) or (--pointer) {
+  @media (--mouse) {
     &:hover {
       background-color: var(--color-bg);
       transform: scale(0.95);
@@ -226,7 +226,7 @@ button {
         font-size: 1.5rem;
       }
 
-      @media (--mouse) or (--pointer) {
+      @media (--mouse) {
         &:hover {
           opacity: 0.6;
         }
@@ -325,7 +325,7 @@ button {
     }
   }
 
-  @media (--mouse) or (--pointer) {
+  @media (--mouse) {
     &:hover {
       opacity: 0.8;
     }
