@@ -39,7 +39,6 @@ module.exports = {
       'warn',
       { groups: ['type', 'builtin', 'external', 'internal', ['sibling', 'parent'], 'index', 'unknown'] },
     ],
-    'playwright/no-skipped-test': 'off',
   },
   ignorePatterns: ['*.cjs', 'node_modules', 'dist', 'public'],
   settings: { 'import/resolver': { typescript: true } },

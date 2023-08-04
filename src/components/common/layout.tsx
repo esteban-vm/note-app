@@ -10,7 +10,7 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
   useEffect(() => scrollTo(0, 0), [pathname])
 
   return (
-    <div className={`layout ${theme}`}>
+    <div className={`layout ${theme}`} data-testid='layout'>
       <main>
         <header>
           <h1>Note App</h1>

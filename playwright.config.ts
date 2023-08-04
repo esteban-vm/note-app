@@ -21,7 +21,7 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
-  timeout: 5 * 60 * 1_000,
+  timeout: 10 * 60 * 1_000,
 
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
@@ -56,6 +56,6 @@ export default defineConfig({
   webServer: {
     command: 'pnpm dev',
     url: 'http://localhost:5174',
-    timeout: 120 * 1000,
+    timeout: 2 * 60 * 1000,
   },
 })

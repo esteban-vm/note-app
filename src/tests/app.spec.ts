@@ -4,7 +4,7 @@ test.beforeEach(async ({ page }) => {
   await page.goto('/')
 })
 
-test.describe('Creating a note:', () => {
+test.describe('creating a note', () => {
   test('should succeed with correct values', async ({ page }) => {
     await expect(page.getByText(/^0$/)).toBeVisible()
 
@@ -59,7 +59,7 @@ test.describe('Creating a note:', () => {
     await titleInput.fill('This sh1t should not pass')
 
     const contentInput = page.getByPlaceholder(/write the note/i)
-    await contentInput.fill('What the hell is this')
+    await contentInput.fill('What the fuck is this')
 
     const createBtn = page.getByRole('button', { name: /create/i })
 
@@ -80,4 +80,61 @@ test.describe('Creating a note:', () => {
     await expect(page.getByText(/created successfully/i)).toBeVisible()
     await expect(page.getByRole('link', { name: /testing politeness/i })).toBeVisible()
   })
+})
+
+test('editing a note', async ({ page }) => {
+  // Creating the note to be updated
+  await page.getByRole('link', { name: /new note/i }).click()
+  await page.getByPlaceholder(/the title/i).fill('Note to update')
+  await page.getByPlaceholder(/write the note/i).fill('This note should be updated')
+  await page.getByRole('button', { name: /create/i }).click()
+  await page.getByText(/yes/i).click()
+
+  // Updating that note
+  await page.getByRole('link', { name: /note to update/i }).click()
+
+  const titleInput = page.getByPlaceholder(/the title/i)
+  await expect(titleInput).not.toBeEmpty()
+  await expect(titleInput).not.toBeFocused()
+  await titleInput.clear()
+  await titleInput.fill('Note updated')
+
+  const contentInput = page.getByPlaceholder(/edit the note/i)
+  await expect(contentInput).not.toBeEmpty()
+  await contentInput.clear()
+  await contentInput.fill('Note updated')
+
+  await page.getByRole('button', { name: /update/i }).click()
+  await page.getByText(/yes/i).click()
+  await expect(page.getByText(/updated successfully/i)).toBeVisible()
+  await expect(page.getByRole('link', { name: /note updated/i })).toBeVisible()
+})
+
+test('removing a note', async ({ page }) => {
+  // Creating the note to be removed
+  await page.getByRole('link', { name: /new note/i }).click()
+  await page.getByPlaceholder(/the title/i).fill('Note to remove')
+  await page.getByPlaceholder(/write the note/i).fill('This note should be removed')
+  await page.getByRole('button', { name: /create/i }).click()
+  await page.getByText(/yes/i).click()
+
+  // Removing that note
+  await page.getByRole('link', { name: /note to remove/i }).click()
+  await page.getByRole('button', { name: /remove/i }).click()
+  await page.getByText(/yes/i).click()
+
+  await expect(page.getByText(/removed successfully/i)).toBeVisible()
+  await expect(page.getByRole('link', { name: /note to remove/i })).toBeHidden()
+})
+
+test('toggling theme', async ({ page }) => {
+  const themeBtn = page.getByRole('button', { name: /theme/i })
+  await themeBtn.click()
+  await expect(page.getByTestId('layout')).toHaveClass(/light/i)
+})
+
+test('toggling language', async ({ page }) => {
+  const langBtn = page.getByRole('button', { name: /language/i })
+  await langBtn.click()
+  await expect(page.getByText(/mis notas/i)).toBeVisible()
 })
