@@ -62,14 +62,15 @@ test.describe('creating a note', () => {
     await contentInput.fill('What the fuck is this')
 
     const createBtn = page.getByRole('button', { name: /create/i })
-
     await createBtn.click()
-    await expect(page.getByText("Please, don't use bad words").first()).toBeVisible()
+
+    const message = page.getByText("Please, don't use bad words")
+    await expect(message.first()).toBeVisible()
 
     await titleInput.clear()
     await titleInput.fill('Testing politeness')
 
-    await expect(page.getByText("Please, don't use bad words")).toBeVisible()
+    await expect(message).toBeVisible()
 
     await contentInput.clear()
     await contentInput.fill('Nice to meet you')
@@ -92,6 +93,7 @@ test('editing a note', async ({ page }) => {
 
   // Updating that note
   await page.getByRole('link', { name: /note to update/i }).click()
+  await expect(page).toHaveURL(/.*note-./)
 
   const titleInput = page.getByPlaceholder(/the title/i)
   await expect(titleInput).not.toBeEmpty()
