@@ -18,7 +18,7 @@ interface INoteContext {
 
 export const NoteContext = createContext<INoteContext | null>(null)
 
-export const NoteProvider: FC<{ children: ReactNode }> = ({ children }) => {
+export const NoteProvider: FC<{ children: ReactNode }> = (props) => {
   const [notes, setNotes] = useLocalStorage<Note[]>('notes', [])
   const { Provider } = NoteContext
 
@@ -42,5 +42,5 @@ export const NoteProvider: FC<{ children: ReactNode }> = ({ children }) => {
     setNotes(notes.filter((note) => note.id !== id))
   }
 
-  return <Provider value={{ notes, get, create, update, remove }}>{children}</Provider>
+  return <Provider value={{ notes, get, create, update, remove }} {...props} />
 }

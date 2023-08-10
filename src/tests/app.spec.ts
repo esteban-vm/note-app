@@ -56,10 +56,10 @@ test.describe('creating a note', () => {
     await page.getByRole('link', { name: /new note/i }).click()
 
     const titleInput = page.getByPlaceholder(/the title/i)
-    await titleInput.fill('This sh1t should not pass')
+    await titleInput.fill('This sh!t should not pass')
 
     const contentInput = page.getByPlaceholder(/write the note/i)
-    await contentInput.fill('What the fuck is this')
+    await contentInput.fill('What the fuk* is this')
 
     const createBtn = page.getByRole('button', { name: /create/i })
     await createBtn.click()
@@ -84,14 +84,12 @@ test.describe('creating a note', () => {
 })
 
 test('editing a note', async ({ page }) => {
-  // Creating the note to be updated
   await page.getByRole('link', { name: /new note/i }).click()
   await page.getByPlaceholder(/the title/i).fill('Note to update')
   await page.getByPlaceholder(/write the note/i).fill('This note should be updated')
   await page.getByRole('button', { name: /create/i }).click()
   await page.getByText(/yes/i).click()
 
-  // Updating that note
   await page.getByRole('link', { name: /note to update/i }).click()
   await expect(page).toHaveURL(/.*note-./)
 
@@ -113,14 +111,12 @@ test('editing a note', async ({ page }) => {
 })
 
 test('removing a note', async ({ page }) => {
-  // Creating the note to be removed
   await page.getByRole('link', { name: /new note/i }).click()
   await page.getByPlaceholder(/the title/i).fill('Note to remove')
   await page.getByPlaceholder(/write the note/i).fill('This note should be removed')
   await page.getByRole('button', { name: /create/i }).click()
   await page.getByText(/yes/i).click()
 
-  // Removing that note
   await page.getByRole('link', { name: /note to remove/i }).click()
   await page.getByRole('button', { name: /remove/i }).click()
   await page.getByText(/yes/i).click()

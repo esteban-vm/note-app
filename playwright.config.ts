@@ -41,7 +41,7 @@ export default defineConfig({
   ],
 
   webServer: {
-    command: 'pnpm dev',
+    command: 'npm run dev',
     url: 'http://localhost:5174',
     timeout: 2 * 60 * 1_000,
   },

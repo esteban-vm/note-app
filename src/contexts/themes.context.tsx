@@ -11,7 +11,7 @@ interface IThemeContext {
 
 export const ThemeContext = createContext<IThemeContext | null>(null)
 
-export const ThemeProvider: FC<{ children: ReactNode }> = ({ children }) => {
+export const ThemeProvider: FC<{ children: ReactNode }> = (props) => {
   const isDark = matchMedia('(prefers-color-scheme: dark)').matches
   const [theme, setTheme] = useLocalStorage<Theme>('theme', isDark ? 'dark' : 'light')
   const { Provider } = ThemeContext
@@ -20,5 +20,5 @@ export const ThemeProvider: FC<{ children: ReactNode }> = ({ children }) => {
     setTheme((prevTheme) => (prevTheme === 'dark' ? 'light' : 'dark'))
   }
 
-  return <Provider value={{ theme, toggle }}>{children}</Provider>
+  return <Provider value={{ theme, toggle }} {...props} />
 }
