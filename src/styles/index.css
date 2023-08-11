@@ -3,8 +3,7 @@
 
 @font-face {
   font-family: 'Lexend';
-  font-display: swap;
-  src: url('/fonts/Lexend.ttf') format('truetype-variations');
+  src: url('/fonts/Lexend.ttf');
 }
 
 /* Capability variables */
