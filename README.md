@@ -1,6 +1,7 @@
 # Note app
 
 ## Main dependencies:
+
 - [React](https://es.react.dev/)
 - [Vite](https://v2.vitejs.dev/)
 - [TypeScript](https://www.typescriptlang.org/)
@@ -10,10 +11,15 @@
 - [Prettier](https://prettier.io/)
 
 ## Features:
+
 - Progressive Web App
 - Light/Dark modes
 - English/Spanish languages
 
-![Note light mode screenshot](/screenshot_light_mode.jpeg "Note light mode screenshot")
+## License:
 
-![Note dark mode screenshot](/screenshot_dark_mode.jpeg "Note dark mode screenshot")
+This project is released under the MIT [LICENSE](/LICENSE)
+
+![Note light mode screenshot](/screenshot_light_mode.jpeg 'Note light mode screenshot')
+
+![Note dark mode screenshot](/screenshot_dark_mode.jpeg 'Note dark mode screenshot')
