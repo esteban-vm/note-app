@@ -1,6 +1,7 @@
 # Note app
 
 ## Main dependencies:
+- [React](https://es.react.dev/)
 - [Vite](https://v2.vitejs.dev/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [i18next](https://www.i18next.com/)
